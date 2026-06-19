@@ -1,0 +1,80 @@
+{
+  "expo": {
+    "name": "Track2Go Mobile",
+    "slug": "track2go-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#2563EB"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.track2go.mobile",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Track2Go needs your location to show nearby buses and terminals.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "Track2Go needs your location for live bus tracking.",
+        "CFBundleURLTypes": [
+          {
+            "CFBundleURLSchemes": ["track2go"]
+          }
+        ]
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundColor": "#2563EB"
+      },
+      "package": "com.track2go.mobile",
+      "permissions": [
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION",
+        "RECEIVE_BOOT_COMPLETED",
+        "VIBRATE"
+      ],
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "data": [
+            {
+              "scheme": "track2go"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-secure-store",
+      [
+        "expo-notifications",
+        {
+          "color": "#2563EB"
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow Track2Go to use your location for bus tracking."
+        }
+      ],
+      "expo-asset",
+      "expo-font"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "track2go-mobile"
+      },
+      "supabaseUrl": "https://hqptxgzpzuhsrybuyjoy.supabase.co",
+      "supabaseAnonKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhxcHR4Z3pwenVoc3J5YnV5am95Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM3MjEyNjEsImV4cCI6MjA4OTI5NzI2MX0.0B7ESA_2W7P3iHsT9Og9oAtj59I8EpyHPNAlQie_kus"
+    }
+  }
+}
