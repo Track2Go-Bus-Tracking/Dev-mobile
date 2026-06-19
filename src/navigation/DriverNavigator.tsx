@@ -1,5 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
+import { View, StyleSheet, Pressable } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { COLORS } from '@/utils/constants';
 import type { DriverTabParamList } from '@/types/navigation';
 
@@ -16,21 +18,28 @@ export default function DriverNavigator() {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
-        tabBarActiveTintColor: COLORS.primary,
-        tabBarInactiveTintColor: COLORS.textMuted,
+        tabBarActiveTintColor: '#F97316',
+        tabBarInactiveTintColor: '#94A3B8',
         tabBarStyle: {
-          borderTopColor: COLORS.border,
-          paddingTop: 4,
-          height: 60,
+          borderTopColor: '#FED7AA',
+          borderTopWidth: 1,
+          backgroundColor: 'white',
+          paddingTop: 6,
+          height: 64,
+          shadowColor: 'rgba(0,0,0,0.04)',
+          shadowOffset: { width: 0, height: -4 },
+          shadowOpacity: 0.5,
+          shadowRadius: 10,
+          elevation: 4,
         },
-        tabBarLabelStyle: { fontSize: 11, fontWeight: '600' },
-        tabBarIcon: ({ color, size }) => {
+        tabBarLabelStyle: { fontSize: 10, fontWeight: '700', marginBottom: 6 },
+        tabBarIcon: ({ color, size, focused }) => {
           const icons: Record<keyof DriverTabParamList, keyof typeof Ionicons.glyphMap> = {
-            Dashboard: 'speedometer',
-            PassengerCounter: 'people',
+            Dashboard: focused ? 'speedometer' : 'speedometer-outline',
+            PassengerCounter: focused ? 'people' : 'people-outline',
             Emergency: 'warning',
-            TripHistory: 'time',
-            Profile: 'person',
+            TripHistory: focused ? 'time' : 'time-outline',
+            Profile: focused ? 'person' : 'person-outline',
           };
           return <Ionicons name={icons[route.name]} size={size} color={color} />;
         },
@@ -42,9 +51,64 @@ export default function DriverNavigator() {
         component={PassengerCounterScreen}
         options={{ title: 'Counter' }}
       />
-      <Tab.Screen name="Emergency" component={EmergencyScreen} />
-      <Tab.Screen name="TripHistory" component={TripHistoryScreen} options={{ title: 'Trips' }} />
+
+      {/* Raised Emergency SOS floating center button */}
+      <Tab.Screen
+        name="Emergency"
+        component={EmergencyScreen}
+        options={{
+          tabBarButton: (props) => (
+            <Pressable
+              {...props}
+              style={({ pressed }) => [
+                styles.floatingButtonContainer,
+                pressed && { opacity: 0.85 },
+              ]}
+            >
+              <LinearGradient
+                colors={['#EF4444', '#DC2626']}
+                style={styles.floatingButton}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+              >
+                <Ionicons name="warning" size={24} color="white" />
+              </LinearGradient>
+            </Pressable>
+          ),
+        }}
+      />
+
+      <Tab.Screen
+        name="TripHistory"
+        component={TripHistoryScreen}
+        options={{ title: 'Trips' }}
+      />
       <Tab.Screen name="Profile" component={DriverProfileScreen} />
     </Tab.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+  floatingButtonContainer: {
+    top: -18,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 66,
+    height: 66,
+    zIndex: 10,
+  },
+  floatingButton: {
+    width: 54,
+    height: 54,
+    borderRadius: 27,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#EF4444',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.4,
+    shadowRadius: 8,
+    elevation: 8,
+    borderWidth: 3,
+    borderColor: '#FFF7ED',
+  },
+});

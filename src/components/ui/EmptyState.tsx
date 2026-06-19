@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Button } from './Button';
 
@@ -18,19 +18,55 @@ export function EmptyState({
   onAction,
 }: EmptyStateProps) {
   return (
-    <View className="flex-1 items-center justify-center px-8 py-12">
-      <View className="mb-4 h-16 w-16 items-center justify-center rounded-full bg-slate-100">
-        <Ionicons name={icon} size={32} color="#64748B" />
+    <View style={styles.container}>
+      <View style={styles.iconWrapper}>
+        <Ionicons name={icon} size={32} color="#FB923C" />
       </View>
-      <Text className="text-center text-lg font-semibold text-slate-900">{title}</Text>
-      {message ? (
-        <Text className="mt-2 text-center text-sm text-slate-500">{message}</Text>
-      ) : null}
+      <Text style={styles.title}>{title}</Text>
+      {message ? <Text style={styles.message}>{message}</Text> : null}
       {actionLabel && onAction ? (
-        <View className="mt-6 w-full">
+        <View style={styles.actionWrapper}>
           <Button title={actionLabel} onPress={onAction} variant="outline" />
         </View>
       ) : null}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 32,
+    paddingVertical: 48,
+  },
+  iconWrapper: {
+    width: 72,
+    height: 72,
+    borderRadius: 36,
+    backgroundColor: '#FFF7ED',
+    borderWidth: 1,
+    borderColor: '#FED7AA',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 16,
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#1F2937',
+    textAlign: 'center',
+  },
+  message: {
+    marginTop: 6,
+    fontSize: 13,
+    color: '#6B7280',
+    textAlign: 'center',
+    lineHeight: 18,
+  },
+  actionWrapper: {
+    marginTop: 24,
+    width: '100%',
+  },
+});

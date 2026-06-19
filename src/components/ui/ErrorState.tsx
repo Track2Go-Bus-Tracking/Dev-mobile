@@ -1,4 +1,4 @@
-import { View, Text, Pressable } from 'react-native';
+import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Button } from './Button';
 
@@ -9,14 +9,14 @@ interface ErrorStateProps {
 
 export function ErrorState({ message, onRetry }: ErrorStateProps) {
   return (
-    <View className="flex-1 items-center justify-center px-8 py-12">
-      <Ionicons name="alert-circle-outline" size={48} color="#EF4444" />
-      <Text className="mt-4 text-center text-lg font-semibold text-slate-900">
-        Something went wrong
-      </Text>
-      <Text className="mt-2 text-center text-sm text-slate-500">{message}</Text>
+    <View style={styles.container}>
+      <View style={styles.iconWrapper}>
+        <Ionicons name="alert-circle-outline" size={40} color="#EF4444" />
+      </View>
+      <Text style={styles.title}>Something went wrong</Text>
+      <Text style={styles.message}>{message}</Text>
       {onRetry ? (
-        <View className="mt-6 w-full">
+        <View style={styles.actionWrapper}>
           <Button title="Try Again" onPress={onRetry} variant="outline" />
         </View>
       ) : null}
@@ -32,16 +32,84 @@ interface ScreenHeaderProps {
 
 export function ScreenHeader({ title, subtitle, onBack }: ScreenHeaderProps) {
   return (
-    <View className="mb-4 flex-row items-center">
+    <View style={headerStyles.container}>
       {onBack ? (
-        <Pressable onPress={onBack} className="mr-3 h-10 w-10 items-center justify-center rounded-full bg-white">
-          <Ionicons name="arrow-back" size={22} color="#0F172A" />
+        <Pressable onPress={onBack} style={headerStyles.backButton}>
+          <Ionicons name="arrow-back" size={22} color="#1F2937" />
         </Pressable>
       ) : null}
-      <View className="flex-1">
-        <Text className="text-2xl font-bold text-slate-900">{title}</Text>
-        {subtitle ? <Text className="mt-0.5 text-sm text-slate-500">{subtitle}</Text> : null}
+      <View style={{ flex: 1 }}>
+        <Text style={headerStyles.title}>{title}</Text>
+        {subtitle ? <Text style={headerStyles.subtitle}>{subtitle}</Text> : null}
       </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 32,
+    paddingVertical: 48,
+    backgroundColor: '#FFF7ED',
+  },
+  iconWrapper: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: '#FEF2F2',
+    borderWidth: 1,
+    borderColor: '#FCA5A5',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 16,
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#1F2937',
+    textAlign: 'center',
+  },
+  message: {
+    marginTop: 6,
+    fontSize: 13,
+    color: '#6B7280',
+    textAlign: 'center',
+    lineHeight: 18,
+  },
+  actionWrapper: {
+    marginTop: 24,
+    width: '100%',
+  },
+});
+
+const headerStyles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  backButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 14,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: '#FED7AA',
+    marginRight: 12,
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: '800',
+    color: '#1F2937',
+  },
+  subtitle: {
+    fontSize: 13,
+    color: '#6B7280',
+    marginTop: 2,
+  },
+});

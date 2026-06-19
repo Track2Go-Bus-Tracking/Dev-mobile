@@ -1,26 +1,29 @@
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 
 interface SkeletonProps {
   width?: number | `${number}%`;
   height?: number;
-  className?: string;
 }
 
-export function Skeleton({ width = '100%', height = 16, className }: SkeletonProps) {
+export function Skeleton({ width = '100%', height = 16 }: SkeletonProps) {
   return (
     <View
-      className={`rounded-lg bg-slate-200 ${className ?? ''}`}
-      style={{ width, height }}
+      style={[
+        styles.skeleton,
+        { width: width as any, height },
+      ]}
     />
   );
 }
 
 export function CardSkeleton() {
   return (
-    <View className="rounded-2xl border border-slate-100 bg-white p-4">
+    <View style={styles.card}>
       <Skeleton height={20} width="60%" />
-      <View className="mt-3 gap-2">
+      <View style={styles.gap}>
         <Skeleton height={14} />
+      </View>
+      <View style={styles.gap}>
         <Skeleton height={14} width="80%" />
       </View>
     </View>
@@ -29,10 +32,31 @@ export function CardSkeleton() {
 
 export function ListSkeleton({ count = 3 }: { count?: number }) {
   return (
-    <View className="gap-3">
+    <View style={styles.list}>
       {Array.from({ length: count }).map((_, i) => (
         <CardSkeleton key={i} />
       ))}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  skeleton: {
+    backgroundColor: '#FED7AA',  // Warm orange tint instead of grey
+    borderRadius: 10,
+    opacity: 0.5,
+  },
+  card: {
+    backgroundColor: 'white',
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#FED7AA',
+    padding: 16,
+  },
+  gap: {
+    marginTop: 10,
+  },
+  list: {
+    gap: 12,
+  },
+});
