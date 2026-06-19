@@ -57,9 +57,9 @@ export default function DriverNavigator() {
         name="Emergency"
         component={EmergencyScreen}
         options={{
-          tabBarButton: (props) => (
+          tabBarButton: ({ onPress, children }) => (
             <Pressable
-              {...props}
+              onPress={onPress}
               style={({ pressed }) => [
                 styles.floatingButtonContainer,
                 pressed && { opacity: 0.85 },

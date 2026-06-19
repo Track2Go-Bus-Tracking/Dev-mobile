@@ -230,13 +230,22 @@ export const MOCK_SCHEDULES: BusSchedule[] = [
   }
 ];
 
-export const MOCK_NOTIFICATIONS = [
+export const MOCK_NOTIFICATIONS: Array<{
+  id: string;
+  user_id: string;
+  title: string;
+  body: string;
+  type: import('@/types').NotificationType;
+  read: boolean;
+  metadata: Record<string, unknown>;
+  created_at: string;
+}> = [
   {
     id: 'n-1',
     user_id: 'any',
     title: 'Bus BUS-102 Arriving Soon',
     body: 'BUS-102 is about 2.5 km away and will reach Camp Phillips in approximately 5 minutes.',
-    type: 'bus_arriving' as const,
+    type: 'bus_arriving',
     read: false,
     metadata: { bus_id: 'b-2' },
     created_at: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
@@ -246,7 +255,7 @@ export const MOCK_NOTIFICATIONS = [
     user_id: 'any',
     title: 'Schedule Change: Dahilayan Shuttle',
     body: 'Starting next week, Friday schedules will start at 7:30 AM instead of 8:00 AM.',
-    type: 'route_change' as const,
+    type: 'route_change',
     read: true,
     metadata: {},
     created_at: new Date(Date.now() - 36 * 60 * 1000).toISOString(),
@@ -256,11 +265,11 @@ export const MOCK_NOTIFICATIONS = [
     user_id: 'any',
     title: 'Heavy Traffic on Route CDO-MF',
     body: 'Minor delays of 10-15 minutes expected near Puerto junction due to road construction.',
-    type: 'delay' as const,
+    type: 'delay',
     read: false,
     metadata: {},
     created_at: new Date(Date.now() - 2 * 3600 * 1000).toISOString(),
-  }
+  },
 ];
 
 export const MOCK_EMERGENCIES: EmergencyAlert[] = [

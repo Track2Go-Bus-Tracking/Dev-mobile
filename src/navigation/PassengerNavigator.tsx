@@ -59,9 +59,9 @@ function PassengerTabs() {
         component={LiveTrackingScreen} 
         options={{ 
           title: 'Track',
-          tabBarButton: (props) => (
+          tabBarButton: ({ onPress, children }) => (
             <Pressable
-              {...props}
+              onPress={onPress}
               style={({ pressed }) => [
                 styles.floatingButtonContainer,
                 pressed && { opacity: 0.85 }
